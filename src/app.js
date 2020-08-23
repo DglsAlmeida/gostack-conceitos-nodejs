@@ -80,13 +80,13 @@ app.delete("/repositories/:id", validateRepositoryId, (request, response) => {
   return response.status(204).send();
 });
 
-app.post("/repositories/:id/like", (request, response) => {
+app.post("/repositories/:id/like", validateRepositoryId, (request, response) => {
   const { id } = request.params;
 
   const repoIndex = repositories.findIndex(repository => repository.id === id);
 
   if (repoIndex < 0) {
-    return response.status(400).json({ error: "repository not found!"})
+    return response.status(400).json({ error: "repository does not exist!"})
   }
 
   repositories[repoIndex].likes += 1;
